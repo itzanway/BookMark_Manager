@@ -8,6 +8,7 @@ const Modal = ({ isOpen, onClose, onSave, formData, setFormData, categories }) =
       <div className="modal" onClick={e => e.stopPropagation()}>
         <h2>Add New Bookmark</h2>
         
+        {/* Title Field */}
         <div className="form-group">
           <label>Title *</label>
           <input 
@@ -19,6 +20,7 @@ const Modal = ({ isOpen, onClose, onSave, formData, setFormData, categories }) =
           />
         </div>
 
+        {/* URL Field */}
         <div className="form-group">
           <label>URL *</label>
           <input 
@@ -29,6 +31,7 @@ const Modal = ({ isOpen, onClose, onSave, formData, setFormData, categories }) =
           />
         </div>
 
+        {/* Category Selection */}
         <div className="form-group">
           <label>Category</label>
           <select 
@@ -41,6 +44,18 @@ const Modal = ({ isOpen, onClose, onSave, formData, setFormData, categories }) =
           </select>
         </div>
 
+        {/* Tags Field (New) */}
+        <div className="form-group">
+          <label>Tags (comma separated)</label>
+          <input 
+            className="form-input" 
+            value={formData.tags || ''} 
+            onChange={e => setFormData({...formData, tags: e.target.value})}
+            placeholder="react, frontend, tutorial"
+          />
+        </div>
+
+        {/* Description Field */}
         <div className="form-group">
           <label>Description</label>
           <textarea 
@@ -52,6 +67,7 @@ const Modal = ({ isOpen, onClose, onSave, formData, setFormData, categories }) =
           />
         </div>
 
+        {/* Action Buttons */}
         <div className="modal-actions">
           <button className="btn-secondary" onClick={onClose}>Cancel</button>
           <button className="btn-primary" onClick={onSave}>Save Bookmark</button>
