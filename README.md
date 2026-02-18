@@ -1,39 +1,39 @@
 # 🔖 Bookmark Manager
 
-A full-stack application to save, organize, and search your favorite website links. Built with **React (Vite)** and **Node.js/Express**, featuring a clean UI, dark mode, and tag management.
+A modern full-stack application to save, organize, and search your favorite website links.
+
+Built using **React (Vite)** for the frontend and **Node.js + Express** for the backend, this application features dark mode, tag management, click tracking, and import/export functionality — all wrapped in a clean and modular UI.
 
 ---
 
 # 📂 Project Structure
-
-This project follows a modular full-stack structure, separating the frontend (`client`) and backend (`server`).
 
 ```text
 bookmark-manager/
 ├── client/                     # React Frontend (Vite)
 │   ├── public/
 │   ├── src/
-│   │   ├── components/         # Reusable UI Components
-│   │   │   ├── BookmarkCard.jsx  # Individual bookmark display
-│   │   │   ├── Modal.jsx         # Add/Edit form overlay
-│   │   │   └── Sidebar.jsx       # Category navigation sidebar
-│   │   ├── App.css             # Main stylesheet (Variables, Dark Mode)
-│   │   ├── App.jsx             # Main Application Logic
-│   │   ├── index.css           # CSS Reset
-│   │   └── main.jsx            # React Entry Point
-│   ├── index.html              # HTML Entry Point
-│   ├── package.json            # Frontend dependencies
-│   └── vite.config.js          # Vite configuration
+│   │   ├── components/
+│   │   │   ├── BookmarkCard.jsx
+│   │   │   ├── Modal.jsx
+│   │   │   └── Sidebar.jsx
+│   │   ├── App.jsx
+│   │   ├── App.css
+│   │   ├── index.css
+│   │   └── main.jsx
+│   ├── index.html
+│   ├── package.json
+│   └── vite.config.js
 │
 ├── server/                     # Node.js Backend
-│   ├── routes/                 # API Route Handlers
-│   │   ├── bookmarks.js        # CRUD for Bookmarks
-│   │   └── categories.js       # CRUD for Categories
-│   ├── data.json               # JSON Persistence Layer (Database)
-│   ├── index.js                # Server Entry Point
-│   └── package.json            # Backend dependencies
+│   ├── routes/
+│   │   ├── bookmarks.js
+│   │   └── categories.js
+│   ├── data.json
+│   ├── index.js
+│   └── package.json
 │
-└── README.md                   # Project Documentation
+└── README.md
 ```
 
 ---
@@ -42,27 +42,49 @@ bookmark-manager/
 
 ## 🔹 Core Functionality
 
-- **CRUD Operations**: Create, Read, and Delete bookmarks.
-- **Categorization**: Filter bookmarks by dynamic categories (Development, Design, etc.).
-- **Search & Filter**: Real-time search by title, description, or tags.
-- **Data Persistence**: Uses a local `data.json` file to store data across server restarts.
+- CRUD Operations for bookmarks
+- Category-based filtering
+- Real-time search (title, description, tags)
+- Persistent storage using `data.json`
 
----
+## 🌟 Bonus Features
 
-## 🌟 Bonus Features Implemented
-
-- 🌗 **Dark Mode**: System-wide dark theme toggle using CSS variables.
-- 🏷️ **Tags**: Support for adding multiple tags to bookmarks for granular organization.
-- 🖼️ **Favicons**: Automatically fetches high-quality favicons for saved URLs.
-- 📈 **Click Tracking**: Tracks link visits and supports sorting by "Most Visited".
-- ⌨️ **Keyboard Shortcuts**: Press `Ctrl + N` (or `Cmd + N`) to open the "Add New" modal.
-- 📥 **Import/Export**: Backup and restore bookmarks via JSON file upload/download.
+- 🌗 Dark Mode toggle
+- 🏷️ Multiple tags per bookmark
+- 🖼️ Automatic favicon fetching
+- 📈 Click tracking with "Most Visited" sorting
+- ⌨️ Keyboard shortcut (`Ctrl + N` / `Cmd + N`)
+- 📥 JSON Import & Export functionality
 
 ---
 
 # 🛠️ Tech Stack
 
-##  Clone the Repository
+## Frontend
+- React 18
+- Vite
+- CSS3 (Flexbox & Grid)
+- Lucide React Icons
+
+## Backend
+- Node.js
+- Express.js
+- CORS
+
+## Database
+- Local file-based storage using `fs` module
+
+---
+
+# ⚙️ Installation & Setup
+
+## 📌 Prerequisites
+- Node.js (v14+)
+- npm
+
+---
+
+## 1️⃣ Clone the Repository
 
 ```bash
 git clone https://github.com/your-username/bookmark-manager.git
@@ -71,74 +93,33 @@ cd bookmark-manager
 
 ---
 
-### Frontend
-- React 18
-- Vite
-- CSS3 (Flexbox & Grid)
-- Lucide React (Icons)
-
-### Backend
-- Node.js
-- Express.js
-- CORS
-
-### Database
-- Local File System (`fs`) with JSON storage
-
----
-
-# ⚙️ Installation & Setup
-
-## 📌 Prerequisites
-- Node.js (v14+) installed on your machine
-
----
-
-## 1️⃣ Backend Setup
-
-The backend runs on **Port 5000**.
+## 2️⃣ Backend Setup (Port 5000)
 
 ```bash
-mkdir server && cd server
-
-cd bookmark-manager/server
-
-# Install dependencies
-npm init -y
-npm install express cors
-OR
+cd server
 npm install
-
-# Start the server
 node index.js
 ```
 
-> Note: The server will automatically load initial data from `data.json`.
-
----
-
-## 2️⃣ Frontend Setup
-
-The frontend runs on **Port 5173** (default Vite port).  
-Open a new terminal window:
-
-```bash
-cd bookmark-manager/client
-
-# Install dependencies
-npm create vite@latest client -- --template react
-npm install
-
-# Start the development server
-npm run dev
+Server runs at:
+```
+http://localhost:5000
 ```
 
 ---
 
-## 3️⃣ Access the App
+## 3️⃣ Frontend Setup (Port 5173)
 
-Open your browser and navigate to:
+Open a new terminal:
 
+```bash
+npm create vite@latest client -- --template react
+cd client
+npm install
+npm run dev
+```
+
+Frontend runs at:
 ```
 http://localhost:5173
 ```
@@ -147,33 +128,70 @@ http://localhost:5173
 
 # 📡 API Endpoints
 
-The backend exposes the following RESTful endpoints at:
-
+Base URL:
 ```
 http://localhost:5000
 ```
 
 | Method | Endpoint | Description |
 |--------|----------|------------|
-| GET | `/api/bookmarks` | Fetch bookmarks. Supports `?category=id`, `?search=text`, `?sort=most-visited` |
-| POST | `/api/bookmarks` | Create a bookmark. Body: `{ title, url, categoryId, tags, description }` |
-| DELETE | `/api/bookmarks/:id` | Delete a bookmark by ID |
-| POST | `/api/bookmarks/:id/click` | Increment the click count for a specific bookmark |
-| POST | `/api/bookmarks/import` | Bulk import an array of bookmarks |
-| GET | `/api/categories` | Get all categories with their bookmark counts |
-| POST | `/api/categories` | Create a new category. Body: `{ name }` |
+| GET | `/api/bookmarks` | Fetch bookmarks (supports filters & sorting) |
+| POST | `/api/bookmarks` | Create bookmark |
+| DELETE | `/api/bookmarks/:id` | Delete bookmark |
+| POST | `/api/bookmarks/:id/click` | Increment click count |
+| POST | `/api/bookmarks/import` | Bulk import bookmarks |
+| GET | `/api/categories` | Fetch categories |
+| POST | `/api/categories` | Create category |
 
 ---
 
 # 🧠 How It Works
 
-- The frontend communicates with the backend via REST APIs.
-- The backend uses Express route handlers to manage bookmarks and categories.
-- Data is stored in `data.json` and persisted using Node's `fs` module.
-- The UI dynamically updates using React state and hooks.
-- Dark mode is handled via CSS variables for seamless theme switching.
+- React manages UI and state.
+- Express handles REST API routes.
+- Data is stored locally in `data.json`.
+- Search and filtering are handled server-side.
+- Dark mode is implemented using CSS variables.
+- Click tracking updates a visit counter per bookmark.
+
+---
+
+# ⏳ Time Spent
+
+| Task | Approx. Time |
+|------|-------------|
+| Backend API development | 1 hour |
+| Frontend UI & Components | 1–1.5 hours |
+| Dark mode & UI polishing | 30 minutes |
+| Bonus features (tags, click tracking, import/export) | 45 minutes |
+| Testing & debugging | 30–45 minutes |
+
+**Total Estimated Time:** ~3–4 hours
+
+---
+
+# 🔮 What I Would Improve
+
+- ✏️ Add Edit/Update bookmark functionality
+- 🔐 Implement user authentication (JWT-based)
+- ☁️ Replace JSON storage with MongoDB or PostgreSQL
+- 📱 Improve mobile responsiveness
+- 🚀 Deploy frontend (Vercel) and backend (Render)
+- 🧪 Add unit & integration testing
+- 🧑‍🤝‍🧑 Support multi-user accounts
+- 🔍 Add advanced filtering (date added, tag grouping)
 
 ---
 
 # 👨‍💻 Author
-Made by ANWAY DURGE
+
+**Anway Durge**
+
+Full Stack Developer  
+Passionate about building clean, scalable web applications.
+
+---
+
+# 📄 License
+
+This project is open-source and available under the MIT License.
