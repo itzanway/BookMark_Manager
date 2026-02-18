@@ -1,38 +1,106 @@
 {
   "categories": [
-    {
-      "id": 1,
-      "name": "Development"
-    },
-    {
-      "id": 2,
-      "name": "Design"
-    },
-    {
-      "id": 3,
-      "name": "News"
-    },
-    {
-      "id": 1771414211941,
-      "name": "scdc"
-    }
+    { "id": 1, "name": "Development" },
+    { "id": 2, "name": "Design" },
+    { "id": 3, "name": "News" },
+    { "id": 4, "name": "Learning" }
   ],
   "bookmarks": [
     {
       "id": 1,
       "title": "GitHub",
       "url": "https://github.com",
-      "description": "Code hosting platform",
+      "description": "Code hosting platform and collaboration tool.",
       "categoryId": 1,
       "createdAt": "2025-12-11T10:30:00Z"
     },
     {
       "id": 2,
+      "title": "Stack Overflow",
+      "url": "https://stackoverflow.com",
+      "description": "Question and answer site for professional and enthusiast programmers.",
+      "categoryId": 1,
+      "createdAt": "2025-12-11T11:00:00Z"
+    },
+    {
+      "id": 3,
+      "title": "MDN Web Docs",
+      "url": "https://developer.mozilla.org",
+      "description": "Resources for developers, by developers.",
+      "categoryId": 1,
+      "createdAt": "2025-12-11T11:15:00Z"
+    },
+    {
+      "id": 4,
+      "title": "Dev.to",
+      "url": "https://dev.to",
+      "description": "A constructive and inclusive social network for software developers.",
+      "categoryId": 1,
+      "createdAt": "2025-12-11T11:30:00Z"
+    },
+    {
+      "id": 5,
+      "title": "React Documentation",
+      "url": "https://react.dev",
+      "description": "The library for web and native user interfaces.",
+      "categoryId": 1,
+      "createdAt": "2025-12-11T11:45:00Z"
+    },
+    {
+      "id": 6,
       "title": "Dribbble",
       "url": "https://dribbble.com",
-      "description": "Design inspiration",
+      "description": "Design inspiration and community.",
       "categoryId": 2,
       "createdAt": "2025-12-12T10:30:00Z"
+    },
+    {
+      "id": 7,
+      "title": "Behance",
+      "url": "https://www.behance.net",
+      "description": "Showcase and discover creative work.",
+      "categoryId": 2,
+      "createdAt": "2025-12-12T12:00:00Z"
+    },
+    {
+      "id": 8,
+      "title": "Figma",
+      "url": "https://www.figma.com",
+      "description": "The collaborative interface design tool.",
+      "categoryId": 2,
+      "createdAt": "2025-12-12T12:30:00Z"
+    },
+    {
+      "id": 9,
+      "title": "Hacker News",
+      "url": "https://news.ycombinator.com",
+      "description": "Social news website focusing on computer science and entrepreneurship.",
+      "categoryId": 3,
+      "createdAt": "2025-12-13T09:00:00Z"
+    },
+    {
+      "id": 10,
+      "title": "TechCrunch",
+      "url": "https://techcrunch.com",
+      "description": "Reporting on the business of technology, startups, and venture capital funding.",
+      "categoryId": 3,
+      "createdAt": "2025-12-13T09:30:00Z"
+    },
+    {
+      "id": 11,
+      "title": "Coursera",
+      "url": "https://www.coursera.org",
+      "description": "Build skills with courses, certificates, and degrees online.",
+      "categoryId": 4,
+      "createdAt": "2025-12-14T14:00:00Z"
+    },
+    {
+      "id": 12,
+      "title": "Udemy",
+      "url": "https://www.udemy.com",
+      "description": "Online courses - learn anything, on your schedule.",
+      "categoryId": 4,
+      "createdAt": "2025-12-14T14:30:00Z"
     }
   ]
 }
