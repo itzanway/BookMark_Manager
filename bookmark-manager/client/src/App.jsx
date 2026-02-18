@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import CategorySidebar from './components/CategorySidebar';
+import { Search, Plus } from 'lucide-react';
+import Sidebar from './components/Sidebar';
 import BookmarkCard from './components/BookmarkCard';
-import './App.css'; // You'll need to create basic CSS for layout
+import Modal from './components/Modal';
+import './App.css';
 
 const API_URL = 'http://localhost:5000/api';
 
@@ -10,13 +12,10 @@ function App() {
   const [categories, setCategories] = useState([]);
   const [activeCategory, setActiveCategory] = useState(null);
   const [search, setSearch] = useState('');
-  
-  // Form State
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({ title: '', url: '', description: '', categoryId: '' });
 
   const fetchData = async () => {
-    // Build query [cite: 254]
     let query = `${API_URL}/bookmarks?`;
     if (activeCategory) query += `category=${activeCategory}&`;
     if (search) query += `search=${search}`;
@@ -33,6 +32,7 @@ function App() {
   useEffect(() => { fetchData(); }, [activeCategory, search]);
 
   const handleDelete = async (id) => {
+    if(!window.confirm("Are you sure?")) return;
     await fetch(`${API_URL}/bookmarks/${id}`, { method: 'DELETE' });
     fetchData();
   };
@@ -47,6 +47,7 @@ function App() {
   };
 
   const handleSaveBookmark = async () => {
+    if (!formData.title || !formData.url) return alert("Title and URL required");
     await fetch(`${API_URL}/bookmarks`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -59,50 +60,52 @@ function App() {
 
   return (
     <div className="app-container">
-      <CategorySidebar 
+      <Sidebar 
         categories={categories} 
         activeCategory={activeCategory} 
-        onSelectCategory={setActiveCategory} 
-        onAddCategory={handleAddCategory}
+        onSelect={setActiveCategory} 
+        onAdd={handleAddCategory}
       />
       
       <main className="main-content">
-        <div className="top-bar">
-          <input 
-            type="text" 
-            placeholder="Search bookmarks..." 
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
-          <button onClick={() => setShowModal(true)}>+ Add New</button>
-        </div>
+        <header className="top-bar">
+          <div className="search-wrapper">
+            <Search className="search-icon" size={18} />
+            <input 
+              type="text" 
+              className="search-input"
+              placeholder="Search bookmarks..." 
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          </div>
+          <button className="btn-primary" onClick={() => setShowModal(true)}>
+            <Plus size={18} /> Add New
+          </button>
+        </header>
 
-        <div className="bookmark-grid">
-          {bookmarks.map(b => (
-            <BookmarkCard key={b.id} bookmark={b} onDelete={handleDelete} />
-          ))}
+        <div className="scroll-area">
+          <div className="grid">
+            {bookmarks.map(b => (
+              <BookmarkCard key={b.id} bookmark={b} onDelete={handleDelete} />
+            ))}
+          </div>
+          {bookmarks.length === 0 && (
+            <div style={{ textAlign: 'center', color: '#94a3b8', marginTop: '3rem' }}>
+              No bookmarks found. Add one to get started!
+            </div>
+          )}
         </div>
       </main>
 
-      {/* Simple Modal Implementation [cite: 255] */}
-      {showModal && (
-        <div className="modal-overlay">
-          <div className="modal">
-            <h2>Add New Bookmark</h2>
-            <input placeholder="Title *" value={formData.title} onChange={e => setFormData({...formData, title: e.target.value})} />
-            <input placeholder="URL *" value={formData.url} onChange={e => setFormData({...formData, url: e.target.value})} />
-            <input placeholder="Description" value={formData.description} onChange={e => setFormData({...formData, description: e.target.value})} />
-            <select value={formData.categoryId} onChange={e => setFormData({...formData, categoryId: e.target.value})}>
-              <option value="">Select Category</option>
-              {categories.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
-            </select>
-            <div className="modal-actions">
-                <button onClick={() => setShowModal(false)}>Cancel</button>
-                <button onClick={handleSaveBookmark}>Save Bookmark</button>
-            </div>
-          </div>
-        </div>
-      )}
+      <Modal 
+        isOpen={showModal} 
+        onClose={() => setShowModal(false)} 
+        onSave={handleSaveBookmark}
+        formData={formData}
+        setFormData={setFormData}
+        categories={categories}
+      />
     </div>
   );
 }
