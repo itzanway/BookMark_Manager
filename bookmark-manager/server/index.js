@@ -4,9 +4,7 @@ const fs = require('fs').promises;
 const path = require('path');
 const app = express();
 
-// --- DEPLOYMENT FIX: USE ENVIRONMENT PORT OR FALLBACK ---
 const PORT = 5000;
-
 const DATA_FILE = path.join(__dirname, 'data.json');
 
 app.use(cors());
@@ -18,7 +16,6 @@ const readData = async () => {
         const data = await fs.readFile(DATA_FILE, 'utf8');
         return JSON.parse(data);
     } catch (err) {
-        // Return default structure if file doesn't exist
         return { bookmarks: [], categories: [] };
     }
 };
@@ -30,28 +27,33 @@ const writeData = async (data) => {
 
 // --- ROUTES ---
 
+// Updated to return a simple array [] instead of { bookmarks: [] }
 app.get('/api/bookmarks', async (req, res) => {
-    const { category, search } = req.query;
-    const data = await readData();
-    let bookmarks = data.bookmarks || [];
+    try {
+        const { category, search } = req.query;
+        const data = await readData();
+        let bookmarks = data.bookmarks || [];
 
-    if (category && category !== 'All') {
-        bookmarks = bookmarks.filter(b => b.categoryId == category);
-    }
-    if (search) {
-        const query = search.toLowerCase();
-        bookmarks = bookmarks.filter(b => 
-            b.title.toLowerCase().includes(query) || 
-            (b.description && b.description.toLowerCase().includes(query))
-        );
-    }
-    
-    const enriched = bookmarks.map(b => ({
-        ...b,
-        category: (data.categories || []).find(c => c.id == b.categoryId)
-    }));
+        if (category && category !== 'All') {
+            bookmarks = bookmarks.filter(b => b.categoryId == category);
+        }
+        if (search) {
+            const query = search.toLowerCase();
+            bookmarks = bookmarks.filter(b => 
+                b.title.toLowerCase().includes(query) || 
+                (b.description && b.description.toLowerCase().includes(query))
+            );
+        }
+        
+        const enriched = bookmarks.map(b => ({
+            ...b,
+            category: (data.categories || []).find(c => c.id == b.categoryId)
+        }));
 
-    res.json({ bookmarks: enriched });
+        res.json(enriched); // FIXED: Sending raw array
+    } catch (error) {
+        res.status(500).json({ error: "Failed to fetch bookmarks" });
+    }
 });
 
 app.post('/api/bookmarks', async (req, res) => {
@@ -81,13 +83,18 @@ app.delete('/api/bookmarks/:id', async (req, res) => {
     res.json({ message: "Deleted" });
 });
 
+// Updated to return a simple array [] instead of { categories: [] }
 app.get('/api/categories', async (req, res) => {
-    const data = await readData();
-    const categories = (data.categories || []).map(c => ({
-        ...c,
-        bookmarkCount: (data.bookmarks || []).filter(b => b.categoryId === c.id).length
-    }));
-    res.json({ categories });
+    try {
+        const data = await readData();
+        const categories = (data.categories || []).map(c => ({
+            ...c,
+            bookmarkCount: (data.bookmarks || []).filter(b => b.categoryId === c.id).length
+        }));
+        res.json(categories); // FIXED: Sending raw array
+    } catch (error) {
+        res.status(500).json({ error: "Failed to fetch categories" });
+    }
 });
 
 app.post('/api/categories', async (req, res) => {
@@ -101,7 +108,6 @@ app.post('/api/categories', async (req, res) => {
     res.json(newCat);
 });
 
-// --- DEPLOYMENT FIX: LISTEN ON 0.0.0.0 ---
 app.listen(PORT, '0.0.0.0', () => {
     console.log(`Server is live on port ${PORT}`);
 });
