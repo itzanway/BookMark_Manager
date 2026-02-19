@@ -5,7 +5,7 @@ const path = require('path');
 const app = express();
 
 // --- DEPLOYMENT FIX: USE ENVIRONMENT PORT OR FALLBACK ---
-const PORT = process.env.PORT || 5000; 
+const PORT = 5000;
 
 const DATA_FILE = path.join(__dirname, 'data.json');
 
